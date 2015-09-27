@@ -1,8 +1,12 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The goal for these two functions is to improve efficiency while calculating
+## the inverse of a Matrix; It will cache a result of an existent matrix and return it
 
-## Write a short comment describing this function
 
+## This function builds the structure to store and get the inverse.
+## It should be called before cacheSolve with a squared matrix, because it will return a list 
+## that can be used to subsequent calculate the Inverse, while allowing the use of the $ operator
+## Parameters: x - class matrix, the actual matrix that will be used in your algorithm
+## Returns: list - representing the object matrix and the functions get and set
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
   set <- function(y) {
@@ -11,31 +15,36 @@ makeCacheMatrix <- function(x = matrix()) {
   }
   get <- function() x
   setMatrixInverse <- function(solve) m <<- solve
-  getMatrixInverser <- function() m
+  getMatrixInverse <- function() m
   list(set = set, get = get,
        setMatrixInverse = setMatrixInverse,
-       getMatrixInverser = getMatrixInverser)
+       getMatrixInverse = getMatrixInverse)
   
   
   
 }
 
 
-## Write a short comment describing this function
-
+## The function performs the checking for an existent environment matrix and also calculates the 
+## inverse
+## Returns: matrix
+## Parameters: The list returned by makeCacheMatrix
+## Example: cacheSolve(makeCacheMatrix(yourMatrix))
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        
   
   
   ## Return a matrix that is the inverse of 'x'
-  m <- x$getMatrixInverser()
+  m <- x$getMatrixInverse()
+  
+  
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
   data <- x$get()
   m <- solve(data, ...)
-  x$setMatrixInverser(m)
+  x$setMatrixInverse(m)
   m
   
 }
